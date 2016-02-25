@@ -205,22 +205,8 @@ function related_items($current_item)
 	}
 }
 
-function palette($current_item)
+function YouTube_thumbnail($item)
 {
-	if (metadata('item', array('Item Type Metadata', 'Palette'))) {
-		$palette = metadata($current_item, array('Item Type Metadata', 'Palette'));
-		$html = '<ul class="list-inline">';
-		foreach (json_decode(html_entity_decode($palette)) as $section) {
-			$section = get_object_vars($section);
-			$color = $section["color"];
-			$closest = $section['closest'];
-			$name = $section['name'];
-			$url = '/solr-search?q=' . urlencode($closest);
-			$html .= '<li><a href="' . $url .'" data-toggle="tooltip" title="Closest color: '. $name . '">';
-			$html .= '<div style="height: 2em; width: 2em; background-color:' . $color . ';">';
-			$html .= '</div></a></li>';
-		}
-		$html .= '</ul>';
-		return $html;
-	}
+	$src = 'http://img.youtube.com/vi/' . metadata($item, array('Item Type Metadata', 'Identifier.YouTube')) . '/hqdefault.jpg';
+	return '<img src="' . $src . '" class="img-responsive">';
 }
